@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SlidingPanel from 'react-sliding-side-panel'
+// db
+import requestService from '../services/requests'
 
 // import react bootstrap
 import { Form, Button } from 'react-bootstrap'
@@ -7,6 +9,19 @@ import { Form, Button } from 'react-bootstrap'
 // formik
 import { Formik, useField, Field } from 'formik'
 import * as yup from 'yup'
+
+// components
+import {
+  resetNotification,
+  setNotification,
+} from '../reducers/notificationReducer'
+
+// redux
+import { useDispatch } from 'react-redux'
+import { addRequest } from '../reducers/requestReducer'
+
+// id
+import { v4 as uuidv4 } from 'uuid'
 
 const TextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props)
@@ -37,10 +52,32 @@ const SelectField = ({ label, optionValues, ...props }) => {
     </Form.Group>
   )
 }
-const RequestForm = () => {
+const RequestForm = ({ setOpenPanel }) => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(resetNotification()), []
+  })
+  console.log(Date.now())
   const handleSignup = async (values) => {
-    console.log('hi')
-    console.log(values)
+    // console.log('hi')
+    // console.log({ ...values, created: Date.now(), id: uuidv4() })
+    setOpenPanel(false)
+
+    event.preventDefault()
+    try {
+      const response = await requestService.postNew({
+        ...values,
+        created: Date.now(),
+        id: uuidv4(),
+        status: 'Open',
+      })
+      console.log(response)
+      dispatch(setNotification('Request created succesfully', 'success', 2))
+      dispatch(addRequest(response))
+    } catch (e) {
+      console.log(e)
+      dispatch(setNotification('Server unavailable', 'danger', 2))
+    }
     // event.preventDefault()
     // try {
     //   await signupService.signUp({
@@ -58,9 +95,9 @@ const RequestForm = () => {
 
   const schema = yup.object({
     requestName: yup.string().required(),
-    requestType: yup.string(),
-    description: yup.string(),
-    priorty: yup.string(),
+    requestType: yup.string().required(),
+    description: yup.string().required(),
+    priority: yup.string().required(),
   })
   // const test = { hi: 'a' }
   return (
@@ -70,10 +107,10 @@ const RequestForm = () => {
         validationSchema={schema}
         onSubmit={handleSignup}
         initialValues={{
-          requestName: 'sdfdsf',
+          requestName: 'name',
           requestType: 'Audit',
-          description: '',
-          priorty: 'High',
+          description: 'description',
+          priority: 'High',
         }}
       >
         {({ handleSubmit }) => (
@@ -97,7 +134,7 @@ const RequestForm = () => {
             />
             <SelectField
               label="Priority"
-              name="priorty"
+              name="priority"
               optionValues={['High', 'Medium', 'Low']}
             />
 
@@ -122,7 +159,7 @@ export const FormPanel = () => {
       </div>
       <SlidingPanel type={'right'} isOpen={openPanel} size={50}>
         <div>
-          <RequestForm />
+          <RequestForm setOpenPanel={setOpenPanel} />
           <Button onClick={() => setOpenPanel(false)} block>
             CANCEL
           </Button>

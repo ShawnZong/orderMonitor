@@ -1,6 +1,10 @@
 //import useState hook to create menu collapse state
 import React, { useState } from 'react'
 
+// redux
+import { useDispatch } from 'react-redux'
+import { partTextFilter, fullTextFilter } from '../reducers/requestReducer'
+
 //import react pro sidebar components
 import {
   ProSidebar,
@@ -12,7 +16,7 @@ import {
 } from 'react-pro-sidebar'
 
 // import react bootstrap
-import { Form, FormControl, Button, Col } from 'react-bootstrap'
+import { Form, Button, Col, InputGroup } from 'react-bootstrap'
 
 //import icons from react icons
 import { FaList, FaRegHeart } from 'react-icons/fa'
@@ -29,6 +33,62 @@ import { BiCog } from 'react-icons/bi'
 import 'react-pro-sidebar/dist/css/styles.css'
 import '../style/Sidebar.css'
 
+const DescriptionFilter = () => {
+  const [text, setText] = useState('')
+
+  const dispatch = useDispatch()
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log(text)
+    dispatch(partTextFilter({ tag: 'description', text: text.toLowerCase() }))
+  }
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Row className="align-items-center">
+        <Col xs="auto">
+          <Form.Label>Search</Form.Label>
+          <InputGroup>
+            <Form.Control
+              placeholder="Search..."
+              onChange={({ target }) => setText(target.value)}
+            />
+            <InputGroup.Append>
+              <Button type="submit">Search</Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </Col>
+      </Form.Row>
+    </Form>
+  )
+}
+
+const SelectFilter = ({ label, name, optionValues }) => {
+  // const [text, setText] = useState(optionValues[0])
+
+  const dispatch = useDispatch()
+
+  const handleChange = (event) => {
+    event.preventDefault()
+    // setText(event.target.value)
+    console.log(event.target.value)
+    dispatch(
+      fullTextFilter({ tag: name, text: event.target.value.toLowerCase() }),
+    )
+  }
+  return (
+    <Form>
+      <Form.Label>{label}</Form.Label>
+      <Form.Control as="select" onChange={handleChange}>
+        {optionValues.map((optionValue) => (
+          <option key={optionValue} value={optionValue}>
+            {optionValue}
+          </option>
+        ))}
+      </Form.Control>
+    </Form>
+  )
+}
 export const Sidebar = () => {
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false)
@@ -57,45 +117,28 @@ export const Sidebar = () => {
           <SidebarContent>
             <Menu iconShape="square">
               <MenuItem>
-                <Form>
-                  <Form.Row className="align-items-center">
-                    <Col xs="auto">
-                      <Form.Label>Search</Form.Label>
-                      <Form.Control placeholder="Search..." />
-                    </Col>
-                    <Col xs="auto">
-                      <Button type="submit">Submit</Button>
-                    </Col>
-                  </Form.Row>
-                </Form>
+                <DescriptionFilter />
               </MenuItem>
               <MenuItem>
-                <Form>
-                  <Form.Label>Request Types</Form.Label>
-                  <Form.Control as="select">
-                    <option>Audit</option>
-                    <option>Maintenance</option>
-                  </Form.Control>
-                </Form>
+                <SelectFilter
+                  label="Request Types"
+                  name="requestType"
+                  optionValues={['Audit', 'Maintenance']}
+                />
               </MenuItem>
               <MenuItem>
-                <Form>
-                  <Form.Label>Priority</Form.Label>
-                  <Form.Control as="select">
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                  </Form.Control>
-                </Form>
+                <SelectFilter
+                  label="Priority"
+                  name="priority"
+                  optionValues={['High', 'Medium', 'Low']}
+                />
               </MenuItem>
               <MenuItem>
-                <Form>
-                  <Form.Label>Status</Form.Label>
-                  <Form.Control as="select">
-                    <option>Open</option>
-                    <option>Closed</option>
-                  </Form.Control>
-                </Form>
+                <SelectFilter
+                  label="Status"
+                  name="status"
+                  optionValues={['Open', 'Closed']}
+                />
               </MenuItem>
 
               <MenuItem active={true} icon={<FiHome />}>

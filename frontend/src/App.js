@@ -9,6 +9,7 @@ import { initRequests } from './reducers/requestReducer'
 import { Menu } from './components/Menu'
 import { Sidebar } from './components/Sidebar'
 import { RequestList } from './components/RequestList'
+import { Notification } from './components/Notification'
 
 // style
 import { Container, Row, Col } from 'react-bootstrap'
@@ -24,6 +25,7 @@ const App = () => {
 
   return (
     <Container fluid>
+      <Notification />
       <Menu />
       <Row>
         <Col xs="3">
