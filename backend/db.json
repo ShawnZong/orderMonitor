@@ -1,0 +1,22 @@
+{
+  "requests": [
+    {
+      "created": "25.1.2019 13.31",
+      "requestName": "Lorem ipsum",
+      "requestType": "Audit",
+      "id": "1",
+      "description": "Audit equipment",
+      "priority": "High",
+      "status": "Open"
+    },
+    {
+      "created": "25.2.2019 13.31",
+      "requestName": "Lorem ipsum",
+      "requestType": "Maintenance",
+      "id": "2",
+      "description": "Test description",
+      "priority": "Low",
+      "status": "Closed"
+    }
+  ]
+}
