@@ -15,9 +15,13 @@ const postNew = async (newobj) => {
   return response.data.message
 }
 
-const select = async (tag, text) => {
+const filter = async (tag, text) => {
   const response = await axios.get(baseURL, { params: { tag, text } })
   return response.data.data
 }
 
-export default { getAll, postNew, select }
+const selectPage = async (page) => {
+  const response = await axios.get(baseURL, { params: { page } })
+  return response.data.data
+}
+export default { getAll, postNew, filter, selectPage }

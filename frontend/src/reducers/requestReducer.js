@@ -1,5 +1,12 @@
 import requestService from '../services/requests'
 
+export const selectPage = (page) => {
+  return async (dispatch) => {
+    const requestsInDB = await requestService.selectPage(page)
+    dispatch({ type: 'SELCT_PAGE', requests: requestsInDB })
+  }
+}
+
 export const initRequests = () => {
   return async (dispatch) => {
     const requestsInDB = await requestService.getAll()
@@ -16,7 +23,7 @@ export const addRequest = (newRequest) => {
 export const partTextFilter = (filter) => {
   return async (dispatch) => {
     console.log(filter)
-    const requestsInDB = await requestService.select(filter.tag, filter.text)
+    const requestsInDB = await requestService.filter(filter.tag, filter.text)
     console.log('response:\n', requestsInDB)
     dispatch({ type: 'PART_TEXT_FILTER', requests: requestsInDB })
   }
@@ -26,7 +33,7 @@ export const fullTextFilter = (filter) => {
   return async (dispatch) => {
     console.log(filter)
 
-    const requestsInDB = await requestService.select(filter.tag, filter.text)
+    const requestsInDB = await requestService.filter(filter.tag, filter.text)
     console.log('response:\n', requestsInDB)
 
     dispatch({ type: 'FULL_TEXT_FILTER', requests: requestsInDB })
@@ -51,6 +58,8 @@ export const requestReducer = (state = [], action) => {
     // return state.filter((request) =>
     //   request[action.filter.tag].toLowerCase().includes(action.filter.text),
     // )
+    case 'SELCT_PAGE':
+      return action.requests
     default:
       return state
   }

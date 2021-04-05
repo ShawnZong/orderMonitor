@@ -1,9 +1,10 @@
-import React from 'react'
-import { Row, Col, Container } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Row, Col, Container, InputGroup, Button, Form } from 'react-bootstrap'
 import { FormPanel } from './RequestForm'
 
 // redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectPage } from '../reducers/requestReducer'
 
 // react table
 import BootstrapTable from 'react-bootstrap-table-next'
@@ -53,7 +54,37 @@ const RequestTable = () => {
     />
   )
 }
+const PageList = () => {
+  const [page, setPage] = useState(1)
 
+  const dispatch = useDispatch()
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    dispatch(selectPage(page))
+  }
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Row>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>Page</InputGroup.Text>
+          </InputGroup.Prepend>
+
+          <Form.Control
+            defaultValue="1"
+            type="number"
+            onChange={({ target }) => setPage(target.value)}
+          />
+
+          <InputGroup.Append>
+            <Button type="submit">Go</Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </Form.Row>
+    </Form>
+  )
+}
 export const RequestList = () => {
   return (
     <Container fluid>
@@ -65,7 +96,7 @@ export const RequestList = () => {
         }}
       >
         <Col>
-          <h4>Service Requests</h4>
+          <h4> Service Requests</h4>
         </Col>
         <Col className="rightAlign">
           <FormPanel />
@@ -73,6 +104,9 @@ export const RequestList = () => {
       </Row>
       <Row>
         <RequestTable />
+      </Row>
+      <Row style={{ justifyContent: 'center' }}>
+        <PageList />
       </Row>
     </Container>
   )
