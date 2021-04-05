@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "react-bootstrap-table-next": "^4.0.3",
-    "react-burger-menu": "^3.0.6",
-    "redux-burger-menu": "^0.2.8",
-    "uuid": "^8.3.2"
-  }
-}
