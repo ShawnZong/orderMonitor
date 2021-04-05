@@ -15,9 +15,12 @@
 
 // heroku db config
 const config = {
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
+  db: {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   },
+  listPerPage: env.LIST_PER_PAGE || 10,
 };
 module.exports = config;
