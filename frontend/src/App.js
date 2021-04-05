@@ -26,7 +26,7 @@ const App = () => {
       <Notification />
       <Menu />
 
-      <Row>
+      <Row id="outer-container">
         <Col xs="3" style={{ color: 'white', background: '#6f748a' }}>
           <FilterBar />
         </Col>

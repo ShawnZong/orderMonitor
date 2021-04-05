@@ -75,7 +75,6 @@ const RequestForm = () => {
       dispatch(setNotification('Request created succesfully', 'success', 2))
       dispatch(addRequest(response))
     } catch (e) {
-      console.log(e)
       dispatch(setNotification('Server unavailable', 'danger', 2))
     }
   }

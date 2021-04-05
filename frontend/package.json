@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:ui": "rm -rf ../backend/build &&  npm run build --prod && cp -r build ../backend/"
+    "build:ui": "rm -rf ../expressBackend/build &&  npm run build --prod && cp -r build ../expressBackend/"
   },
   "eslintConfig": {
     "extends": [

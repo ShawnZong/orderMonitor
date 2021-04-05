@@ -7,7 +7,11 @@ export const Sidebar = reduxBurgerMenu(Menu)
 
 export const TestMenu = () => {
   return (
-    <Sidebar customBurgerIcon={false}>
+    <Sidebar
+      customBurgerIcon={false}
+      pageWrapId={'page-wrap'}
+      outerContainerId={'outer-container'}
+    >
       <a id="home" className="menu-item">
         Home
       </a>

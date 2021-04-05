@@ -22,19 +22,14 @@ export const addRequest = (newRequest) => {
 
 export const partTextFilter = (filter) => {
   return async (dispatch) => {
-    console.log(filter)
     const requestsInDB = await requestService.filter(filter.tag, filter.text)
-    console.log('response:\n', requestsInDB)
     dispatch({ type: 'PART_TEXT_FILTER', requests: requestsInDB })
   }
 }
 
 export const fullTextFilter = (filter) => {
   return async (dispatch) => {
-    console.log(filter)
-
     const requestsInDB = await requestService.filter(filter.tag, filter.text)
-    console.log('response:\n', requestsInDB)
 
     dispatch({ type: 'FULL_TEXT_FILTER', requests: requestsInDB })
   }

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { partTextFilter, fullTextFilter } from '../reducers/requestReducer'
 
 // import react bootstrap
-import { Form, Button, Row, Container, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Row, Container, InputGroup } from 'react-bootstrap'
 
 const DescriptionFilter = () => {
   const [text, setText] = useState('')
@@ -15,7 +15,6 @@ const DescriptionFilter = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(text)
     dispatch(partTextFilter({ tag: 'description', text: text.toLowerCase() }))
   }
   return (

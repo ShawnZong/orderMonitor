@@ -102,12 +102,14 @@ export const RequestList = () => {
           <FormPanel />
         </Col>
       </Row>
-      <Row>
-        <RequestTable />
-      </Row>
-      <Row style={{ justifyContent: 'center' }}>
-        <PageList />
-      </Row>
+      <main id="page-wrap">
+        <Row>
+          <RequestTable />
+        </Row>
+        <Row style={{ justifyContent: 'center', paddingBottom: '30px' }}>
+          <PageList />
+        </Row>
+      </main>
     </Container>
   )
 }
