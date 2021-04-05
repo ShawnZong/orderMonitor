@@ -83,7 +83,7 @@ const RequestForm = () => {
   const schema = yup.object({
     requestName: yup.string().required(),
     requestType: yup.string().required(),
-    description: yup.string().required(),
+    description: yup.string().required().max(255),
     priority: yup.string().required(),
   })
   return (

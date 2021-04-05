@@ -29,6 +29,7 @@ export const requestReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_REQUEST':
       // console.log('hi')
+      // console.log('action:\n', action.requests)
       return action.requests
     case 'ADD_REQUEST':
       return state.concat(action.newRequest)

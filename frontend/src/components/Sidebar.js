@@ -80,7 +80,7 @@ export const FilterBar = () => {
       <Row>
         <SelectFilter
           label="Request Types"
-          name="requestType"
+          name="requesttype"
           optionValues={['Audit', 'Maintenance']}
         />
       </Row>
