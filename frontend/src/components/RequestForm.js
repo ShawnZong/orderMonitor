@@ -57,15 +57,13 @@ const SelectField = ({ label, optionValues, ...props }) => {
     </Form.Group>
   )
 }
-const RequestForm = ({ setOpenPanel }) => {
+const RequestForm = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(resetNotification()), []
   })
 
   const handleSignup = async (values) => {
-    setOpenPanel(false)
-
     event.preventDefault()
     try {
       const response = await requestService.postNew({
