@@ -16,6 +16,22 @@ async function getAllRequests(page = 1) {
     meta,
   };
 }
+
+async function selectRequests(tag, text, page = 1) {
+  const offset = helper.getOffset(page, config.listPerPage);
+  const rows = await db.query(
+    `SELECT * FROM (SELECT * FROM request WHERE LOWER(${tag}) LIKE '%${text}%') AS tmp OFFSET $1 LIMIT $2`,
+    [offset, config.listPerPage]
+  );
+  const data = helper.emptyOrRows(rows);
+  const meta = { page };
+
+  return {
+    data,
+    meta,
+  };
+}
+
 async function addRequest(newobj) {
   console.log(newobj);
   const result = await db.query(
@@ -42,4 +58,5 @@ async function addRequest(newobj) {
 module.exports = {
   getAllRequests,
   addRequest,
+  selectRequests,
 };

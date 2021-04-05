@@ -48,7 +48,7 @@ const SelectFilter = ({ label, name, optionValues }) => {
 
   const handleChange = (event) => {
     event.preventDefault()
-    console.log(event.target.value)
+    // console.log(event.target.value)
     dispatch(
       fullTextFilter({ tag: name, text: event.target.value.toLowerCase() }),
     )
@@ -59,6 +59,7 @@ const SelectFilter = ({ label, name, optionValues }) => {
         <Form.Row>
           <Form.Label>{label}</Form.Label>
           <Form.Control as="select" onChange={handleChange}>
+            <option value="">...</option>
             {optionValues.map((optionValue) => (
               <option key={optionValue} value={optionValue}>
                 {optionValue}
