@@ -16,7 +16,7 @@ import {
 } from 'react-pro-sidebar'
 
 // import react bootstrap
-import { Form, Button, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Row, Container, Col, InputGroup } from 'react-bootstrap'
 
 //import icons from react icons
 import { FaList, FaRegHeart } from 'react-icons/fa'
@@ -89,6 +89,38 @@ const SelectFilter = ({ label, name, optionValues }) => {
     </Form>
   )
 }
+
+export const FilterBar = () => {
+  return (
+    <Container fluid>
+      <Row>
+        <DescriptionFilter />
+      </Row>
+      <Row>
+        <SelectFilter
+          label="Request Types"
+          name="requestType"
+          optionValues={['Audit', 'Maintenance']}
+        />
+      </Row>
+      <Row>
+        <SelectFilter
+          label="Priority"
+          name="priority"
+          optionValues={['High', 'Medium', 'Low']}
+        />
+      </Row>
+      <Row>
+        <SelectFilter
+          label="Status"
+          name="status"
+          optionValues={['Open', 'Closed']}
+        />
+      </Row>
+    </Container>
+  )
+}
+
 export const Sidebar = () => {
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false)

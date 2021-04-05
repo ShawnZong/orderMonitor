@@ -15,10 +15,12 @@ import {
   resetNotification,
   setNotification,
 } from '../reducers/notificationReducer'
+import { Sidebar } from '../components/ReduxSidebar'
 
 // redux
 import { useDispatch } from 'react-redux'
 import { addRequest } from '../reducers/requestReducer'
+import { action as toggleMenu } from 'redux-burger-menu'
 
 // id
 import { v4 as uuidv4 } from 'uuid'
@@ -149,22 +151,24 @@ const RequestForm = ({ setOpenPanel }) => {
 }
 
 export const FormPanel = () => {
-  const [openPanel, setOpenPanel] = useState(false)
+  const dispatch = useDispatch()
+
   return (
     <div>
       <div>
-        <Button onClick={() => setOpenPanel(true)} variant="outline-info">
+        <Button
+          onClick={() => dispatch(toggleMenu(true))}
+          variant="outline-info"
+        >
           Open
         </Button>
       </div>
-      <SlidingPanel type={'right'} isOpen={openPanel} size={50}>
-        <div>
-          <RequestForm setOpenPanel={setOpenPanel} />
-          <Button onClick={() => setOpenPanel(false)} block>
-            CANCEL
-          </Button>
-        </div>
-      </SlidingPanel>
+      <Sidebar right customBurgerIcon={false} noOverlay>
+        <RequestForm />
+        <Button onClick={() => dispatch(toggleMenu(false))} block>
+          CANCEL
+        </Button>
+      </Sidebar>
     </div>
   )
 }

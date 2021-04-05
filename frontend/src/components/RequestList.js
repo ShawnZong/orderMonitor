@@ -109,8 +109,8 @@ export const RequestList = () => {
   return (
     <div>
       <Row>
-        <Col className="mr-auto">Service Requests</Col>
-        <Col className="ml-auto">
+        <Col>Service Requests</Col>
+        <Col>
           <FormPanel />
         </Col>
       </Row>
