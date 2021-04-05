@@ -16,7 +16,6 @@ const Notification = () => {
       </Modal.Header>
       <Modal.Body>
         <Alert variant={notification.color}>{notification.message}</Alert>
-        {/* {notification.message} */}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

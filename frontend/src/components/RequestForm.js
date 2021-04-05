@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import SlidingPanel from 'react-sliding-side-panel'
+
 // db
 import requestService from '../services/requests'
 
 // import react bootstrap
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Container } from 'react-bootstrap'
 
 // formik
 import { Formik, useField, Field } from 'formik'
@@ -24,6 +24,9 @@ import { action as toggleMenu } from 'redux-burger-menu'
 
 // id
 import { v4 as uuidv4 } from 'uuid'
+
+// style
+import '../style/Custom.css'
 
 const TextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props)
@@ -59,10 +62,8 @@ const RequestForm = ({ setOpenPanel }) => {
   useEffect(() => {
     dispatch(resetNotification()), []
   })
-  console.log(Date.now())
+
   const handleSignup = async (values) => {
-    // console.log('hi')
-    // console.log({ ...values, created: Date.now(), id: uuidv4() })
     setOpenPanel(false)
 
     event.preventDefault()
@@ -73,26 +74,12 @@ const RequestForm = ({ setOpenPanel }) => {
         id: uuidv4(),
         status: 'Open',
       })
-      console.log(response)
       dispatch(setNotification('Request created succesfully', 'success', 2))
       dispatch(addRequest(response))
     } catch (e) {
       console.log(e)
       dispatch(setNotification('Server unavailable', 'danger', 2))
     }
-    // event.preventDefault()
-    // try {
-    //   await signupService.signUp({
-    //     username: values.username,
-    //     name: values.nickname,
-    //     password: values.password,
-    //   })
-    //   dispatch(resetNotification())
-    //   props.onHide()
-    // } catch (e) {
-    //   props.onHide()
-    //   dispatch(setNotification('username exists', 'danger', 5))
-    // }
   }
 
   const schema = yup.object({
@@ -101,9 +88,8 @@ const RequestForm = ({ setOpenPanel }) => {
     description: yup.string().required(),
     priority: yup.string().required(),
   })
-  // const test = { hi: 'a' }
   return (
-    <div>
+    <Container fluid style={{ textAlign: 'left', color: 'white' }}>
       <h5>CREATE NEW SERVICE REQUEST</h5>
       <Formik
         validationSchema={schema}
@@ -146,7 +132,7 @@ const RequestForm = ({ setOpenPanel }) => {
           </Form>
         )}
       </Formik>
-    </div>
+    </Container>
   )
 }
 
@@ -154,21 +140,13 @@ export const FormPanel = () => {
   const dispatch = useDispatch()
 
   return (
-    <div>
-      <div>
-        <Button
-          onClick={() => dispatch(toggleMenu(true))}
-          variant="outline-info"
-        >
-          Open
-        </Button>
-      </div>
-      <Sidebar right customBurgerIcon={false} noOverlay>
+    <Container fluid>
+      <Sidebar right customBurgerIcon={false} noOverlay width={'38%'}>
         <RequestForm />
-        <Button onClick={() => dispatch(toggleMenu(false))} block>
-          CANCEL
-        </Button>
       </Sidebar>
-    </div>
+      <Button onClick={() => dispatch(toggleMenu(true))} variant="success">
+        NEW SERVICE REQUEST
+      </Button>
+    </Container>
   )
 }
