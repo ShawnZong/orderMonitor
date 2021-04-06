@@ -26,11 +26,21 @@ const App = () => {
       <Notification />
       <Menu />
 
-      <Row id="outer-container">
-        <Col xs="3" style={{ color: 'white', background: '#6f748a' }}>
+      <Row className="align-self-stretch" id="outer-container">
+        <Col
+          xs="3"
+          style={{ color: 'white', background: '#6f748a', minHeight: '100vh' }}
+        >
           <FilterBar />
         </Col>
-        <Col xs="9" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+        <Col
+          xs="9"
+          style={{
+            paddingLeft: '0px',
+            paddingRight: '0px',
+            minHeight: '100vh',
+          }}
+        >
           <RequestList />
         </Col>
       </Row>
