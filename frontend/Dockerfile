@@ -1,6 +1,6 @@
-FROM node:alpine
+FROM node:16-alpine
 WORKDIR /usr/src/app
-COPY package* ./
+COPY . .
 RUN npm install
 RUN npm install -g serve
 RUN npm run build
