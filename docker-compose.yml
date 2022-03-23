@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=local
+      - POSTGRES_PASSWORD=local
+      - POSTGRES_DB=local
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - ordermonitor-network
+
+  backend:
+    image: ordermonitor-backend
+    build: ./expressBackend
+    command: npm start
+    volumes:
+      - ./expressBackend:/usr/src/app
+      - backend_node_modules:/usr/src/app/node_modules
+    environment:
+      - DB_HOSt=db
+      - DB_PORT=5432
+      - DB_USER=local
+      - DB_PASSWORD=local
+      - DB_NAME=local
+      - LIST_PER_PAGE=10
+    networks:
+      - ordermonitor-network
+
+  frontend:
+    image: ordermonitor-frontend
+    build: ./frontend
+    command: serve -s -l 3000 build
+    environment:
+      - BACKEND_URL=http://backend:2999
+    volumes:
+      - ./frontend:/usr/src/app
+      - frontend_node_modules:/usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    networks:
+      - ordermonitor-network
+
+volumes:
+  db_data:
+  backend_node_modules:
+  frontend_node_modules:
+
+networks:
+  ordermonitor-network:
+    name: ordermonitor-network
