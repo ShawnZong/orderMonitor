@@ -15,9 +15,6 @@ services:
     image: ordermonitor-backend
     build: ./expressBackend
     command: npm start
-    volumes:
-      - ./expressBackend:/usr/src/app
-      - backend_node_modules:/usr/src/app/node_modules
     environment:
       - DB_HOSt=db
       - DB_PORT=5432
@@ -31,10 +28,9 @@ services:
   frontend:
     image: ordermonitor-frontend
     build: ./frontend
+    command: serve -s -l 3000 build
     environment:
       - BACKEND_URL=http://backend:2999
-    volumes:
-      - frontend_node_modules:/usr/src/app/node_modules
     ports:
       - 3000:3000
     networks:
@@ -42,8 +38,6 @@ services:
 
 volumes:
   db_data:
-  backend_node_modules:
-  frontend_node_modules:
 
 networks:
   ordermonitor-network:
