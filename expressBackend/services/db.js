@@ -4,7 +4,13 @@ const config = require("../config");
 
 async function query(query, params) {
   const client = new Client(config.db);
-  await client.connect();
+  await client.connect(err => {
+    if (err) {
+      console.error('connection error', err.stack)
+    } else {
+      console.log('connected')
+    }
+  })
 
   // const { rows, fields } = await pool.query(query, params);
   const { rows, fields } = await client.query(query, params);
